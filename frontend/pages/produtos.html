@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Compra de Produtos de Beleza</title>
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f7fa;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-size: 16px;  /* base boa para leitura, nem muito grande nem pequena */
+  line-height: 1.4;
+  color: #003366;
+}
+
+.container {
+  flex: 1;
+  padding: 5px 5px; /* menos padding para ficar mais compacto */
+  max-width: 350px; /* diminuiu de 900px para 700px */
+  margin: auto;
+  width: 100%;
+}
+
+h2, h3 {
+    text-align: center;
+  color: black;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.5rem;
+}
+
+/* Produtos */
+.produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-bottom: 60px;
+}
+
+.produto {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 2px 8px rgb(0 64 128 / 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease;
+  font-size: 14px;  /* diminuir um pouco para não “estufar” */
+}
+
+.produto:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 16px rgb(0 64 128 / 0.3);
+}
+
+.produto img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 0 10px #004080aa;
+}
+
+.produto-nome {
+  font-weight: 700;
+  font-size: 16px;
+  color: #004080;
+  margin-bottom: 6px;
+}
+
+.produto-preco {
+  font-weight: 600;
+  font-size: 15px;
+  color: #0074e8;
+  margin-bottom: 12px;
+}
+
+.btn-adicionar {
+  background-color: #0074e8;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-adicionar:hover {
+  background-color: #005bb5;
+}
+
+/* Botão Checkout fixo */
+#btnCheckout {
+  position: fixed;
+  bottom: 70px;
+  right: 30px;
+  background-color: #004080;
+  color: white;
+  border: none;
+  padding: 14px 22px;
+  font-weight: 700;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgb(0 64 128 / 0.5);
+  display: none;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+#btnCheckout:hover {
+  background-color: #002952;
+}
+
+/* Revisão do pedido */
+#resumoPedido {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgb(0 64 128 / 0.2);
+  max-width: 480px;
+  margin: 0 auto 30px auto;
+  display: none;
+}
+
+#resumoPedido h3 {
+  margin-bottom: 18px;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+#resumoProdutos {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px 0;
+  max-height: 280px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+#resumoProdutos li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding: 6px 0;
+  font-weight: 600;
+  color: #004080;
+}
+
+#totalPedido {
+  font-size: 18px;
+  font-weight: 800;
+  text-align: right;
+  color: #0074e8;
+  margin-bottom: 18px;
+}
+
+#btnPagar {
+  width: 100%;
+  background-color: #004080;
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+  border: none;
+  padding: 12px 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#btnPagar:hover {
+  background-color: #002952;
+}
+
+/* Formulário pagamento */
+#formPagamento {
+  background: #fff;
+  max-width: 480px;
+  margin: 0 auto 30px auto;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgb(0 64 128 / 0.2);
+  display: none;
+  font-size: 14px;
+}
+
+#formPagamento h3 {
+  text-align: center;
+  margin-bottom: 18px;
+  color: #004080;
+  font-size: 1.4rem;
+}
+
+#formPagamento label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #004080;
+}
+
+#formPagamento input {
+  width: 100%;
+  padding: 9px 10px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+#btnFinalizarCompra {
+  width: 100%;
+  padding: 12px 0;
+  background-color: #004080;
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#btnFinalizarCompra:hover {
+  background-color: #002952;
+}
+
+/* Spinner */
+.spinner-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(255,255,255,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  display: none;
+}
+
+.spinner {
+  border: 6px solid #ccc;
+  border-top: 6px solid #004080;
+  border-radius: 50%;
+  width: 50px; height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}
+
+/* Rodapé */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+  z-index: 1000; /* para garantir que fique por cima de outros elementos */
+}
+
+.bottom-nav a {
+  text-align: center;
+  color: #000;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.bottom-nav img {
+  width: 24px;
+  height: 24px;
+  display: block;
+  margin: 0 auto 4px;
+}
+
+#toast.show {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <h2>Produtos de Beleza</h2>
+
+  <div id="listaProdutos" class="produtos">
+    <div class="produto">
+      <img src="https://product-data.raiadrogasil.io/images/10648959.webp" alt="Creme Facial" />
+      <div class="produto-nome">Creme Facial Hidratante</div>
+      <div class="produto-preco">R$ 59,90</div>
+      <button class="btn-adicionar" onclick="adicionarProduto('Creme Facial Hidratante', 59.90)">Adicionar</button>
+    </div>
+    <div class="produto">
+      <img src="https://images.tcdn.com.br/img/img_prod/1237800/180_peeling_micelar_ritual_sublime_vizet_250ml_115_1_afd5e7afc651b9d1d267aacd43f6577f.jpg" alt="Shampoo" />
+      <div class="produto-nome">Shampoo Revitalizante</div>
+      <div class="produto-preco">R$ 39,90</div>
+      <button class="btn-adicionar" onclick="adicionarProduto('Shampoo Revitalizante', 39.90)">Adicionar</button>
+    </div>
+    <div class="produto">
+      <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTX3Z4VI6a9-cy6DXvtCMh8t6z-dgC0sn8vkzF5AyGuobp8HvehL3m-fjeZ3t5628pHx-ZWx4ujJGOSEDwbqV-px6fVhvUNCflLLTQMYFgKGCgVm2cPIdLOFYP-KwAaZGUrQ9QjVQ&usqp=CAc" alt="Perfume" />
+      <div class="produto-nome">Perfume Floral</div>
+      <div class="produto-preco">R$ 129,90</div>
+      <button class="btn-adicionar" onclick="adicionarProduto('Perfume Floral', 129.90)">Adicionar</button>
+    </div>
+        <div class="produto">
+      <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTM7tWasAGIxUr1rHip525AJedPiNH7b8k1a5zxj6tHnOhDGfm4vffteZSsGpUljZee1GAqwBX3HCr5Gi0jy9daUjT8RVMkzoMnGPwN1KavKR9oaIpcBdLkoYPoh7QS3wG73hEcjg&usqp=CAc" alt="Perfume" />
+      <div class="produto-nome">Body Splash</div>
+      <div class="produto-preco">R$ 89,90</div>
+      <button class="btn-adicionar" onclick="adicionarProduto('Body Splash', 89.90)">Adicionar</button>
+    </div>
+  </div>
+
+  <!-- Botão Checkout fixo -->
+  <button id="btnCheckout" onclick="mostrarResumo()">Checkout</button>
+
+  <!-- Resumo do pedido -->
+  <div id="resumoPedido">
+    <h3>Resumo do Pedido</h3>
+    <ul id="resumoProdutos"></ul>
+    <div id="totalPedido"></div>
+    <button id="btnPagar" onclick="mostrarFormulario()">Pagar</button>
+  </div>
+
+  <!-- Formulário pagamento -->
+  <div id="formPagamento">
+    <h3>Pagamento</h3>
+    <form id="checkoutForm" onsubmit="finalizarCompra(event)">
+      <label for="nome">Nome Completo</label>
+      <input type="text" id="nome" name="nome" required />
+      
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="cartao">Número do Cartão</label>
+      <input type="text" id="cartao" name="cartao" pattern="\d{16}" maxlength="16" placeholder="Digite 16 números" required />
+
+      <label for="validade">Validade (MM/AA)</label>
+      <input type="text" id="validade" name="validade" pattern="(0[1-9]|1[0-2])\/\d{2}" placeholder="MM/AA" maxlength="5" required />
+
+      <label for="cvv">CVV</label>
+      <input type="text" id="cvv" name="cvv" pattern="\d{3}" maxlength="3" required />
+
+      <button type="submit" id="btnFinalizarCompra">Finalizar Compra</button>
+    </form>
+  </div>
+
+</div>
+
+<!-- Spinner de carregamento -->
+<div class="spinner-overlay" id="spinner">
+  <div class="spinner"></div>
+</div>
+
+  <nav class="bottom-nav">
+    <a href="home.html">
+      <img src="../../icons/home.png" alt="Home" />
+      <span>Início</span>
+    </a>
+    <a href="agendamento.html">
+      <img src="../../icons/calendar.png" alt="Agendar" />
+      <span>Agendar</span>
+    </a>
+    <a href="avaliacoes.html">
+      <img src="../../icons/star.png" alt="Avaliar" />
+      <span>Avaliar</span>
+    </a>
+    <a href="perfil.html">
+      <img src="../../icons/user.png" alt="Perfil" />
+      <span>Perfil</span>
+    </a>
+  </nav>
+<div id="toast" style="
+  visibility: hidden;
+  min-width: 250px;
+  background-color: #004080;
+  color: white;
+  text-align: center;
+  border-radius: 4px;
+  padding: 12px;
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  z-index: 1000;
+  transition: visibility 0s, opacity 0.5s linear;
+  opacity: 0;
+"></div>
+
+
+<script>
+  const carrinho = [];
+
+function adicionarProduto(nome, preco) {
+  carrinho.push({ nome, preco });
+  atualizarBotaoCheckout();
+
+  const toast = document.getElementById('toast');
+  toast.textContent = `${nome} adicionado ao carrinho!`;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+
+  function atualizarBotaoCheckout() {
+    const btn = document.getElementById('btnCheckout');
+    btn.style.display = carrinho.length > 0 ? 'block' : 'none';
+  }
+
+  function mostrarResumo() {
+    // Esconder produtos e botão checkout
+    document.getElementById('listaProdutos').style.display = 'none';
+    document.getElementById('btnCheckout').style.display = 'none';
+
+    // Mostrar resumo
+    const resumoDiv = document.getElementById('resumoPedido');
+    const ulResumo = document.getElementById('resumoProdutos');
+    ulResumo.innerHTML = '';
+
+    let total = 0;
+    carrinho.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item.nome;
+      const precoSpan = document.createElement('span');
+      precoSpan.textContent = `R$ ${item.preco.toFixed(2).replace('.', ',')}`;
+      li.appendChild(precoSpan);
+      ulResumo.appendChild(li);
+      total += item.preco;
+    });
+
+    document.getElementById('totalPedido').textContent = `Total: R$ ${total.toFixed(2).replace('.', ',')}`;
+
+    resumoDiv.style.display = 'block';
+  }
+
+  function mostrarFormulario() {
+    document.getElementById('resumoPedido').style.display = 'none';
+    document.getElementById('formPagamento').style.display = 'block';
+  }
+
+  function finalizarCompra(event) {
+    event.preventDefault();
+
+    // Mostrar spinner
+    const spinner = document.getElementById('spinner');
+    spinner.style.display = 'flex';
+
+    // Simula processamento
+    setTimeout(() => {
+      spinner.style.display = 'none';
+      alert('Compra realizada com sucesso! Obrigado pela preferência.');
+
+      // Resetar estados
+      carrinho.length = 0;
+      document.getElementById('formPagamento').style.display = 'none';
+      document.getElementById('listaProdutos').style.display = 'grid';
+      atualizarBotaoCheckout();
+      document.getElementById('checkoutForm').reset();
+    }, 2500);
+  }
+</script>
+
+</body>
+</html>
