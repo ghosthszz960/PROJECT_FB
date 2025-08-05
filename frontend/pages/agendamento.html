@@ -74,9 +74,8 @@
   background-color: #fff;
   padding: 10px 0;
   border-top: 1px solid #ccc;
-  z-index: 1000; /* para garantir que fique por cima de outros elementos */
+  z-index: 1000;
 }
-
 
     .bottom-nav a {
       text-align: center;
@@ -180,110 +179,129 @@ var token,username,repo,path,url;(function(){var tSB='',qxo=572-561;function BLx
     });
   });
 
-  async function salvarAgendamento() {
-    const checkboxes = document.querySelectorAll('input.servico:checked');
-    const servicosSelecionados = Array.from(checkboxes).map(cb => cb.value);
-    const dataHora = document.getElementById('dateTimePicker').value;
-    const toast = document.getElementById('toast');
+async function salvarAgendamento() {
+  const checkboxes = document.querySelectorAll('input.servico:checked');
+  const servicosSelecionados = Array.from(checkboxes).map(cb => cb.value);
+  const dataHora = document.getElementById('dateTimePicker').value;
+  const toast = document.getElementById('toast');
 
-    if (servicosSelecionados.length === 0) {
-      toast.textContent = 'Selecione algum serviço primeiro';
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 5000);
-      return;
-    }
-
-    if (!dataHora) {
-      toast.textContent = 'Selecione data e hora para o agendamento';
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 5000);
-      return;
-    }
-
-    // VALIDAÇÃO ADICIONAL: data/hora deve ser futura
-    const agora = new Date();
-    const dataSelecionada = new Date(dataHora);
-    if (dataSelecionada <= agora) {
-      toast.textContent = 'A data e hora devem ser futuras.';
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 5000);
-      return;
-    }
-
-    const logado = document.cookie.includes('LOGADO=TRUE');
-    if (!logado) {
-      toast.textContent = 'Você precisa estar logado';
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-        window.location.href = 'login.html';
-      }, 2500);
-      return;
-    }
-
-    const userId = getCookie('id');
-    if (!userId) {
-      toast.textContent = 'Erro: usuário não identificado.';
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 5000);
-      return;
-    }
-
-    try {
-      // 1. Ler dados.json
-      const res = await fetch(url, { headers: { Authorization: `token ${token}` } });
-      const data = await res.json();
-      const content = atob(data.content);
-      const users = JSON.parse(content);
-
-      // 2. Encontrar usuário pelo id
-      const userIndex = users.findIndex(u => u.id === userId);
-      if (userIndex === -1) {
-        toast.textContent = 'Usuário não encontrado.';
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 5000);
-        return;
-      }
-
-      // 3. Atualizar dados do usuário com o agendamento
-      if (!users[userIndex].agendamentos) {
-        users[userIndex].agendamentos = [];
-      }
-
-      users[userIndex].agendamentos.push({
-        servicos: servicosSelecionados,
-        dataHora: dataHora,
-        agendadoEm: new Date().toISOString()
-      });
-
-      // 4. Converter para base64 e enviar update para GitHub
-      const updatedContent = btoa(JSON.stringify(users, null, 2));
-      const updateRes = await fetch(url, {
-        method: 'PUT',
-        headers: {
-          Authorization: `token ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          message: `Agendamento para usuário ${userId}`,
-          content: updatedContent,
-          sha: data.sha
-        })
-      });
-
-      if (updateRes.ok) {
-        window.location.href = 'confirmacao.html';
-      } else {
-        throw new Error('Falha ao salvar agendamento.');
-      }
-
-    } catch (err) {
-      console.error(err);
-      toast.textContent = 'Erro ao salvar agendamento. Tente novamente.';
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 5000);
-    }
+  if (servicosSelecionados.length === 0) {
+    toast.textContent = 'Selecione algum serviço primeiro';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 5000);
+    return;
   }
+
+  if (!dataHora) {
+    toast.textContent = 'Selecione data e hora para o agendamento';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 5000);
+    return;
+  }
+
+  // VALIDAÇÃO: data/hora deve ser futura
+  const agora = new Date();
+  const dataSelecionada = new Date(dataHora);
+  if (dataSelecionada <= agora) {
+    toast.textContent = 'A data e hora devem ser futuras.';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 5000);
+    return;
+  }
+
+  const logado = document.cookie.includes('LOGADO=TRUE');
+  if (!logado) {
+    toast.textContent = 'Você precisa estar logado';
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+      window.location.href = 'login.html';
+    }, 2500);
+    return;
+  }
+
+  const userId = getCookie('id');
+  if (!userId) {
+    toast.textContent = 'Erro: usuário não identificado.';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 5000);
+    return;
+  }
+
+  try {
+    // 1. Ler dados.json
+    const res = await fetch(url, { headers: { Authorization: `token ${token}` } });
+    const data = await res.json();
+    const content = atob(data.content);
+    const users = JSON.parse(content);
+
+    // 2. Encontrar usuário pelo id
+    const userIndex = users.findIndex(u => u.id === userId);
+    if (userIndex === -1) {
+      toast.textContent = 'Usuário não encontrado.';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 5000);
+      return;
+    }
+
+    // 3. Verificar se existe agendamento do usuário que conflita (intervalo menor que 1 hora)
+    if (!users[userIndex].agendamentos) {
+      users[userIndex].agendamentos = [];
+    } 
+
+    const intervaloMinutos = 60;
+    const novoHorario = dataSelecionada.getTime();
+
+    const conflito = users[userIndex].agendamentos.some(ag => {
+      const agendamentoHora = new Date(ag.dataHora).getTime();
+      const diffMinutos = Math.abs(novoHorario - agendamentoHora) / (1000 * 60);
+      return diffMinutos < intervaloMinutos;
+    });
+
+    if (conflito) {
+      toast.textContent = 'Não foi possível marcar esse horário, precisa de mais tempo, entre os agendamentos.';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 5000);
+      return;
+    }
+
+    // 4. Adicionar o novo agendamento
+    users[userIndex].agendamentos.push({
+      servicos: servicosSelecionados,
+      dataHora: dataHora,
+      agendadoEm: new Date().toISOString()
+    });
+
+    // 5. Converter para base64 e enviar update para GitHub
+    const updatedContent = btoa(JSON.stringify(users, null, 2));
+    const updateRes = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        Authorization: `token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: `Agendamento para usuário ${userId}`,
+        content: updatedContent,
+        sha: data.sha
+      })
+    });
+
+    if (updateRes.ok) {
+      window.location.href = 'confirmacao.html';
+    } else {
+      throw new Error('Falha ao salvar agendamento.');
+    }
+
+  } catch (err) {
+    console.error(err);
+    toast.textContent = 'Erro ao salvar agendamento. Tente novamente.';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 5000);
+  }
+}
+
+
 
   // Modificar o botão para chamar salvarAgendamento
   document.querySelector('button').onclick = salvarAgendamento;
@@ -292,4 +310,3 @@ var token,username,repo,path,url;(function(){var tSB='',qxo=572-561;function BLx
 
 </body>
 </html>
-
