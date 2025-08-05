@@ -39,13 +39,19 @@
       margin: 20px 0;
     }
 
-    .bottom-nav {
-      display: flex;
-      justify-content: space-around;
-      background-color: #fff;
-      padding: 10px 0;
-      border-top: 1px solid #ccc;
-    }
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+  z-index: 1000; /* para garantir que fique por cima de outros elementos */
+}
+
 
     .bottom-nav a {
       text-align: center;
@@ -89,4 +95,5 @@
     </a>
   </nav>
 </body>
+
 </html>
