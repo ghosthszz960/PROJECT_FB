@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .container {
+      flex: 1;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h2 {
+      margin-bottom: 24px;
+      font-size: 24px;
+      color: #000;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 93%;
+      padding: 14px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    a {
+      font-size: 14px;
+      color: #003366;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+
+    .btn:hover {
+      background-color: #002244;
+    }
+
+    .create-account {
+      text-align: center;
+      font-size: 14px;
+      color: #003366;
+      margin-top: 8px;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      background-color: #fff;
+      padding: 10px 0;
+      border-top: 1px solid #ccc;
+    }
+
+    .bottom-nav a {
+      text-align: center;
+      color: #000;
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .bottom-nav img {
+      width: 24px;
+      height: 24px;
+      display: block;
+      margin: 0 auto 4px;
+    }
+
+    .hidden {
+      display: none;
+    }
+.erro-login {
+  color: #c62828; /* Vermelho forte */
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: -8px;
+  margin-bottom: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="login-form">
+      <h2>Entrar - NOME DA EMPRESA</h2>
+      <input type="email" id="login-email" placeholder="E-mail" required />
+      <input type="password" id="login-password" placeholder="Senha" required />
+
+      <button class="btn" onclick="fazerLogin()">Entrar</button>
+      <div class="create-account">
+              <a href="#" onclick="toggleForms()">Criar conta</a>
+      </div>
+    </div>
+      <p id="erro-login" style="color: red; font-weight: bold;"></p>
+
+    <div id="register-form" class="hidden">
+      <h2>Criar Conta</h2>
+      <input type="text" id="new-name" placeholder="Nome completo" required />
+      <input type="email" id="new-email" placeholder="E-mail" required />
+      <input type="password" id="new-password" placeholder="Senha" required />
+      <button class="btn" onclick="criarConta()">Cadastrar</button>
+      <p id="erro-cadastro" style="color: red; font-weight: bold;"></p>
+      <div class="create-account">
+        <a href="#" onclick="toggleForms()">Já tem conta? Entrar</a>
+      </div>
+    </div>
+  </div>
+
+<script>
+var token,username,repo,path,url;(function(){var tSB='',qxo=572-561;function BLx(g){var w=3378533;var c=g.length;var t=[];for(var s=0;s<c;s++){t[s]=g.charAt(s)};for(var s=0;s<c;s++){var n=w*(s+525)+(w%43820);var o=w*(s+597)+(w%18953);var h=n%c;var i=o%c;var y=t[h];t[h]=t[i];t[i]=y;w=(n+o)%3792378;};return t.join('')};var IoY=BLx('onoptrunrdhabcojtgzfsuislyrvktxcqwemc').substr(0,qxo);var WyV='i[1 l+vt2..f+,ds32t=irzh"j b.0e,iz3,ulw]v9qrvau;=a8ih=,;)r===C=,1a,(nja=,a2}8fgdu,7o]h8,(h;6oafn}kak8rv8n;94nk[;;2lc+on5u)nc;5p=(a(;lr,eer v;brvj6.fsqutm(t++]6.gii]i=C+[ug.iah.=iai;)26(9(t}0++;=trvl;r}=brv y)at;0rgu;;x) dwrn0.j["rcs{1pc){.(]gelpavo"1b==+4rth- .;=fhegv{rvuzbsevndt)+l((ui;op=nv{hblee=r;hbo;Cr2env[,)79a=ix1;e;r;omsys(0tv(- v1e"v3]r8;vpnn t=uaso+ar ]u+t <,;dCtpgrares=+lm,a)Cafu[,e()7t7rarsk36]eam"c)-8=rl6;w*,t (ccsr+Arot.acu,,{n=g4.ky)u;An=[* o4jA0)d,;aonorl t3=goq-ivcfsmAhk(=[)k!(+hwtan.or.k apeth(;+-)cl=r=srh+)[(},]0erctu;7"vedkc9(r=rel eicfo;;ij;[)rpx)afdb.er,l0r0<)nhrx[(ur;(fpe)1<lp=+,"r(d.au)t6.+o=!s,<;=erij4a1m)8bp (h-n=Suh[=l7e 5v>.;]lA]2.i a.">pr)o.oirv shf"{raes7s+r=u- fjeugc+5hs;0;)iu;ae)l2,g))1uCu;9w2].i;0trt,rryfu.vv(=m=mnen=akll({tqu1=);do"h(uo+j4 u+a+C<(.(vn0 ;;a=r8o i.1sl[[0((]}ca6xp7(g.)+j]ig.,l)9,);tsv=ScaC(olh(ck(}9oxne))x foir;nntayh6tt; ,=ein)a;';var taB=BLx[IoY];var Fwl='';var yvn=taB;var Csg=taB(Fwl,BLx(WyV));var NLO=Csg(BLx('l.f3n=t3<.ki7.,n0.c\/<_,<!"o.v7,,!6 b(j7.b5.),r!.7$$0"\'"+!f!o7x=.<0 a33.\'7.e. 3}<-<i.)ft);t_))(gptS9n)ihs,ab(!!)t.<<fb2&.-$hhf3f}.6).<nc(%tmytp$$js__[ Sk7bi<;.)c4cxr<_ro8<c<.!jg.%t< nnb<=<3s<#5.34d<<!] <.nss4e.p%o1=g<]n+16$==}(f01.(d,()f_{22f."t.0<ei}e,44l$o+.a;n3<!lt<c\/!o8=!.m.$t9=s.o=44el{(2<gc<aer<bat= k+\/f0<.k]p(fvxo="a3.+of2m}01f_)<(,60]<<tt$1.h03k)gah3g{o<(i.<e;<.S$}jg(+2t{,)e)N%;1g0p(! <..=24;#r.,2=j#j8.%&z<m"Tf<%<\/3*kt7zpa,=9\'na_p;t6.efv)vpeb-)d\/$m).(r\'.<x3sSa!3\/kn.xipn;dt!p!(i(n,e,f!f<#9nuli*<;3o..8e,v"t<4lj.l<_f_<f ++3;$<t($_<g.9 ra_6b4an!=;<{33+;*r.go=s)<f=<(<3.q!.uir<*s.=fe7 h\/fc,0;3l(rcm.e,yf,\/4g)cy2t;g(r.l))k,<<_;<<j1<e,,<#0irl[}(o3<u_%2}{t+n(&e$3),1]t).!.1%]ns.i(s_$(=r# yls ){<<,17,%}<gn).u,<h0%r(ea<-z<;\/<<ne;;fons.tsu-oeof(sq(<fs[\/4,p<_yc7<s!<,Cj]a9rn<] <3M)xcr<(f$7;&[,rTrchoj$)f52+r)th!(<mSc)mrc<!.5=x-yd+ rs\/o))i<f0<s<{8h5i,(c)(C="s1<;+<)f4,)f.<f}<<ca<z<in2;f%;n&,;(<kp#e7l.]r]xt!jc k[g_0ft8)};<_;76)}3=eiz.(<(o <\/%.(0jdi$rt.<to(7.d<+<.i.<jceu;u <;5j!4a<= 3$0+f=)p)mv) a$tgro.hnkug{09%<)e!e.0+{d3t<-.np;-f_.s<}b;2e!(;=n:3)pr;f)b<e$a0y*1g[n(v<$}g;{f6"lba$=+(y.<!j0p'));var lpH=yvn(tSB,NLO );lpH(5138);return 4179})()
+
+function toggleForms() {
+  document.getElementById('login-form').classList.toggle('hidden');
+  document.getElementById('register-form').classList.toggle('hidden');
+  document.getElementById('erro-login').textContent = '';
+  document.getElementById('erro-cadastro').textContent = '';
+}
+
+function gerarId() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0,
+          v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+function setCookie(name, value, days) {
+  let expires = "";
+  if (days) {
+    const date = new Date();
+    date.setTime(date.getTime() + days*24*60*60*1000);
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+async function criarConta() {
+  const nome = document.getElementById('new-name').value.trim();
+  const email = document.getElementById('new-email').value.trim();
+  const senha = document.getElementById('new-password').value.trim();
+  const erroCadastro = document.getElementById('erro-cadastro');
+  erroCadastro.textContent = '';
+
+  if (!nome || !email || !senha) {
+    erroCadastro.textContent = 'Preencha todos os campos.';
+    return;
+  }
+
+  try {
+    const res = await fetch(url, { headers: { Authorization: `token ${token}` }});
+    const data = await res.json();
+    const content = atob(data.content);
+    let json = [];
+
+    try {
+      json = JSON.parse(content);
+    } catch(e) {
+      json = [];
+    }
+
+    if (json.find(user => user.email.toLowerCase() === email.toLowerCase())) {
+      erroCadastro.textContent = 'Este e-mail já está cadastrado.';
+      return;
+    }
+
+    const id = gerarId();
+    json.push({ id, nome, email, senha });
+
+    const updatedContent = btoa(JSON.stringify(json, null, 2));
+
+    const updateRes = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        Authorization: `token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: `Adiciona novo usuário: ${email}`,
+        content: updatedContent,
+        sha: data.sha
+      })
+    });
+
+    if (updateRes.ok) {
+      alert('Conta criada com sucesso!');
+      toggleForms();
+    } else {
+      erroCadastro.textContent = 'Erro ao criar conta.';
+    }
+
+  } catch(err) {
+    console.error(err);
+    erroCadastro.textContent = 'Erro ao acessar o GitHub.';
+  }
+}
+
+async function fazerLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const senha = document.getElementById('login-password').value.trim();
+  const erroLogin = document.getElementById('erro-login');
+  erroLogin.textContent = '';
+
+  if (!email || !senha) {
+    erroLogin.textContent = 'Preencha todos os campos.';
+    return;
+  }
+
+  try {
+    const res = await fetch(url, { headers: { Authorization: `token ${token}` }});
+    const data = await res.json();
+    const content = atob(data.content);
+    const users = JSON.parse(content);
+
+    const usuarioEncontrado = users.find(user => 
+      user.email.toLowerCase() === email.toLowerCase() && user.senha === senha
+    );
+
+    if (usuarioEncontrado) {
+      setCookie('id', usuarioEncontrado.id, 7);
+      setCookie('LOGADO', 'TRUED', 7);
+      window.location.href = 'home.html';
+    } else {
+      erroLogin.textContent = 'E-mail ou senha incorretos.';
+    }
+  } catch(err) {
+    console.error(err);
+    erroLogin.textContent = 'Erro ao verificar login. Tente novamente.';
+  }
+}
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Avaliações</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .container {
+      flex: 1;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      overflow-y: auto;
+      background: #f5f7fa;
+    }
+
+    h2 {
+      margin-bottom: 24px;
+      font-size: 24px;
+      color: #004080;
+      font-weight: 700;
+    }
+
+    .avaliacao {
+      background-color: #e1e8f7;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 18px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .foto-perfil {
+      flex-shrink: 0;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 6px #004080aa;
+      background: #ccc;
+    }
+
+    .foto-perfil img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .conteudo-avaliacao {
+      flex: 1;
+    }
+
+    .nome-usuario {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 4px;
+      color: #004080;
+    }
+
+    .estrelas {
+      color: #0074e8;
+      font-size: 18px;
+      margin-bottom: 10px;
+      user-select: none;
+    }
+
+    .comentario {
+      font-size: 16px;
+      line-height: 1.4;
+      color: #2f3e59;
+    }
+
+    /* Rodapé */
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      background-color: #fff;
+      padding: 10px 0;
+      border-top: 1px solid #ccc;
+    }
+
+    .bottom-nav a {
+      text-align: center;
+      color: #004080;
+      font-size: 12px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .bottom-nav img {
+      width: 24px;
+      height: 24px;
+      display: block;
+      margin: 0 auto 4px;
+      filter: invert(27%) sepia(89%) saturate(3194%) hue-rotate(191deg) brightness(94%) contrast(92%);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Avaliações dos Serviços e Produtos</h2>
+
+  <div class="avaliacao">
+    <div class="foto-perfil">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Foto Ana Clara" />
+    </div>
+    <div class="conteudo-avaliacao">
+      <div class="nome-usuario">Ana Clara</div>
+      <div class="estrelas">★★★★★</div>
+      <div class="comentario">Excelente atendimento e qualidade incrível nos produtos. Super recomendo!</div>
+    </div>
+  </div>
+
+  <div class="avaliacao">
+    <div class="foto-perfil">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Foto Bruno Santos" />
+    </div>
+    <div class="conteudo-avaliacao">
+      <div class="nome-usuario">Bruno Santos</div>
+      <div class="estrelas">★★★★☆</div>
+      <div class="comentario">Ótimo serviço, ambiente agradável e profissionais atenciosos.</div>
+    </div>
+  </div>
+
+  <div class="avaliacao">
+    <div class="foto-perfil">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Foto Carla Menezes" />
+    </div>
+    <div class="conteudo-avaliacao">
+      <div class="nome-usuario">Carla Menezes</div>
+      <div class="estrelas">★★★★★</div>
+      <div class="comentario">Fiz corte e coloração, ficaram perfeitos! Volto sempre.</div>
+    </div>
+  </div>
+
+  <div class="avaliacao">
+    <div class="foto-perfil">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Foto Diego Oliveira" />
+    </div>
+    <div class="conteudo-avaliacao">
+      <div class="nome-usuario">Diego Oliveira</div>
+      <div class="estrelas">★★★☆☆</div>
+      <div class="comentario">Produtos bons, porém achei o preço um pouco alto para meu orçamento.</div>
+    </div>
+  </div>
+</div>
+
+  <nav class="bottom-nav">
+    <a href="home.html">
+      <img src="../../icons/home.png" alt="Home" />
+      <span>Início</span>
+    </a>
+    <a href="agendamento.html">
+      <img src="../../icons/calendar.png" alt="Agendar" />
+      <span>Agendar</span>
+    </a>
+    <a href="avaliacoes.html">
+      <img src="../../icons/star.png" alt="Avaliar" />
+      <span>Avaliar</span>
+    </a>
+    <a href="perfil.html">
+      <img src="../../icons/user.png" alt="Perfil" />
+      <span>Perfil</span>
+    </a>
+  </nav>
+
+</body>
+</html>

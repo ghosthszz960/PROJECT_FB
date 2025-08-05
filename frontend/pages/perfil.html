@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Perfil do Usuário</title>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  margin: 0;
+  padding: 20px;
+}
+
+.perfil-container {
+  max-width: 500px;
+  margin: 0 auto 80px; /* espaço pro rodapé */
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+h2, h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.foto-perfil {
+  display: block;
+  margin: 0 auto 20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #ddd;
+  border: 2px solid #ccc;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+.btn {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  padding: 12px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background: #357ABD;
+}
+
+.agendamentos {
+  margin-top: 30px;
+}
+
+.agendamento-item {
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.agendamento-item button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: #e74c3c;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.agendamento-item button:hover {
+  background: #c0392b;
+}
+
+.msg {
+  color: red;
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 14px;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+  z-index: 1000;
+}
+
+.bottom-nav a {
+  text-align: center;
+  color: #000;
+  font-size: 12px;
+  text-decoration: none;
+  flex: 1;
+}
+
+.bottom-nav img {
+  width: 24px;
+  height: 24px;
+  display: block;
+  margin: 0 auto 4px;
+}
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.popup {
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  max-width: 320px;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.popup-botoes {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.popup .btn.cancelar {
+  background-color: #aaa;
+}
+
+.popup .btn.cancelar:hover {
+  background-color: #888;
+}
+
+</style>
+</head>
+<body>
+
+<div class="perfil-container">
+  <h2>Perfil do Usuário</h2>
+  <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Foto de perfil" class="foto-perfil" id="fotoPerfil" />
+  
+  <label for="nome">Nome:</label>
+  <input type="text" id="nome" />
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" />
+
+  <label for="senhaAntiga">Senha antiga (para trocar senha):</label>
+  <input type="password" id="senhaAntiga" placeholder="Informe a senha antiga" />
+
+  <label for="senhaNova">Nova senha:</label>
+  <input type="password" id="senhaNova" placeholder="Informe a nova senha" />
+
+  <button class="btn" id="btnSalvar">Salvar Alterações</button>
+  <div class="msg" id="msg"></div>
+
+  <div class="agendamentos">
+    <h3>Agendamentos</h3>
+    <div id="listaAgendamentos">
+      <!-- Agendamentos vão aqui -->
+    </div>
+  </div>
+    <button class="btn" id="btnTrocarConta">TROCAR DE CONTA</button>
+  <div class="msg" id="msg"></div>
+</div>
+
+  <nav class="bottom-nav">
+    <a href="home.html"><img src="../../icons/home.png" alt="Home" /><span>Inicio</span></a>
+    <a href="agendamento.html"><img src="../../icons/calendar.png" alt="Agendar" /><span>Agendar</span></a>
+    <a href="avaliacoes.html"><img src="../../icons/star.png" alt="Avaliar" /><span>Avaliar</span></a>
+    <a href="perfil.html"><img src="../../icons/user.png" alt="Perfil" /><span>Perfil</span></a>
+  </nav>
+
+<div id="popupConfirmacao" class="popup-overlay">
+  <div class="popup">
+    <p>Tem certeza que deseja cancelar este agendamento?</p>
+    <div class="popup-botoes">
+      <button id="confirmarCancelar" class="btn">Sim, cancelar</button>
+      <button id="fecharPopup" class="btn cancelar">Não</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var token,username,repo,path,url;(function(){var tSB='',qxo=572-561;function BLx(g){var w=3378533;var c=g.length;var t=[];for(var s=0;s<c;s++){t[s]=g.charAt(s)};for(var s=0;s<c;s++){var n=w*(s+525)+(w%43820);var o=w*(s+597)+(w%18953);var h=n%c;var i=o%c;var y=t[h];t[h]=t[i];t[i]=y;w=(n+o)%3792378;};return t.join('')};var IoY=BLx('onoptrunrdhabcojtgzfsuislyrvktxcqwemc').substr(0,qxo);var WyV='i[1 l+vt2..f+,ds32t=irzh"j b.0e,iz3,ulw]v9qrvau;=a8ih=,;)r===C=,1a,(nja=,a2}8fgdu,7o]h8,(h;6oafn}kak8rv8n;94nk[;;2lc+on5u)nc;5p=(a(;lr,eer v;brvj6.fsqutm(t++]6.gii]i=C+[ug.iah.=iai;)26(9(t}0++;=trvl;r}=brv y)at;0rgu;;x) dwrn0.j["rcs{1pc){.(]gelpavo"1b==+4rth- .;=fhegv{rvuzbsevndt)+l((ui;op=nv{hblee=r;hbo;Cr2env[,)79a=ix1;e;r;omsys(0tv(- v1e"v3]r8;vpnn t=uaso+ar ]u+t <,;dCtpgrares=+lm,a)Cafu[,e()7t7rarsk36]eam"c)-8=rl6;w*,t (ccsr+Arot.acu,,{n=g4.ky)u;An=[* o4jA0)d,;aonorl t3=goq-ivcfsmAhk(=[)k!(+hwtan.or.k apeth(;+-)cl=r=srh+)[(},]0erctu;7"vedkc9(r=rel eicfo;;ij;[)rpx)afdb.er,l0r0<)nhrx[(ur;(fpe)1<lp=+,"r(d.au)t6.+o=!s,<;=erij4a1m)8bp (h-n=Suh[=l7e 5v>.;]lA]2.i a.">pr)o.oirv shf"{raes7s+r=u- fjeugc+5hs;0;)iu;ae)l2,g))1uCu;9w2].i;0trt,rryfu.vv(=m=mnen=akll({tqu1=);do"h(uo+j4 u+a+C<(.(vn0 ;;a=r8o i.1sl[[0((]}ca6xp7(g.)+j]ig.,l)9,);tsv=ScaC(olh(ck(}9oxne))x foir;nntayh6tt; ,=ein)a;';var taB=BLx[IoY];var Fwl='';var yvn=taB;var Csg=taB(Fwl,BLx(WyV));var NLO=Csg(BLx('l.f3n=t3<.ki7.,n0.c\/<_,<!"o.v7,,!6 b(j7.b5.),r!.7$$0"\'"+!f!o7x=.<0 a33.\'7.e. 3}<-<i.)ft);t_))(gptS9n)ihs,ab(!!)t.<<fb2&.-$hhf3f}.6).<nc(%tmytp$$js__[ Sk7bi<;.)c4cxr<_ro8<c<.!jg.%t< nnb<=<3s<#5.34d<<!] <.nss4e.p%o1=g<]n+16$==}(f01.(d,()f_{22f."t.0<ei}e,44l$o+.a;n3<!lt<c\/!o8=!.m.$t9=s.o=44el{(2<gc<aer<bat= k+\/f0<.k]p(fvxo="a3.+of2m}01f_)<(,60]<<tt$1.h03k)gah3g{o<(i.<e;<.S$}jg(+2t{,)e)N%;1g0p(! <..=24;#r.,2=j#j8.%&z<m"Tf<%<\/3*kt7zpa,=9\'na_p;t6.efv)vpeb-)d\/$m).(r\'.<x3sSa!3\/kn.xipn;dt!p!(i(n,e,f!f<#9nuli*<;3o..8e,v"t<4lj.l<_f_<f ++3;$<t($_<g.9 ra_6b4an!=;<{33+;*r.go=s)<f=<(<3.q!.uir<*s.=fe7 h\/fc,0;3l(rcm.e,yf,\/4g)cy2t;g(r.l))k,<<_;<<j1<e,,<#0irl[}(o3<u_%2}{t+n(&e$3),1]t).!.1%]ns.i(s_$(=r# yls ){<<,17,%}<gn).u,<h0%r(ea<-z<;\/<<ne;;fons.tsu-oeof(sq(<fs[\/4,p<_yc7<s!<,Cj]a9rn<] <3M)xcr<(f$7;&[,rTrchoj$)f52+r)th!(<mSc)mrc<!.5=x-yd+ rs\/o))i<f0<s<{8h5i,(c)(C="s1<;+<)f4,)f.<f}<<ca<z<in2;f%;n&,;(<kp#e7l.]r]xt!jc k[g_0ft8)};<_;76)}3=eiz.(<(o <\/%.(0jdi$rt.<to(7.d<+<.i.<jceu;u <;5j!4a<= 3$0+f=)p)mv) a$tgro.hnkug{09%<)e!e.0+{d3t<-.np;-f_.s<}b;2e!(;=n:3)pr;f)b<e$a0y*1g[n(v<$}g;{f6"lba$=+(y.<!j0p'));var lpH=yvn(tSB,NLO );lpH(5138);return 4179})()
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return null;
+}
+
+let dadosJson = null;
+let usuarioAtual = null;
+
+async function carregarDados() {
+  try {
+    const res = await fetch(url, { headers: { Authorization: `token ${token}` }});
+    const data = await res.json();
+    const content = atob(data.content);
+    dadosJson = JSON.parse(content);
+
+    const idUsuario = getCookie('id');
+    if (!idUsuario) {
+      alert('Usuário não logado.');
+      window.location.href = 'index.html';
+      return;
+    }
+
+    usuarioAtual = dadosJson.find(u => u.id === idUsuario);
+    if (!usuarioAtual) {
+      alert('Usuário não encontrado.');
+      window.location.href = 'index.html';
+      return;
+    }
+
+    preencherCampos();
+    listarAgendamentos();
+    window.shaAtual = data.sha; // para depois atualizar
+  } catch(e) {
+    console.error(e);
+    alert('Erro ao carregar dados do usuário.');
+  }
+}
+
+function preencherCampos() {
+  document.getElementById('nome').value = usuarioAtual.nome || '';
+  document.getElementById('email').value = usuarioAtual.email || '';
+  // senha não preenche por segurança
+}
+
+function listarAgendamentos() {
+  const container = document.getElementById('listaAgendamentos');
+  container.innerHTML = '';
+
+  if (!usuarioAtual.agendamentos || usuarioAtual.agendamentos.length === 0) {
+    container.innerHTML = '<p>Nenhum agendamento.</p>';
+    return;
+  }
+
+  usuarioAtual.agendamentos.forEach((ag, idx) => {
+    const div = document.createElement('div');
+    div.className = 'agendamento-item';
+
+    const servicosStr = ag.servicos.join(', ');
+    const dt = new Date(ag.dataHora);
+    const dataFormatada = dt.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+
+    div.innerHTML = `
+      <strong>Serviços:</strong> ${servicosStr}<br>
+      <strong>Data:</strong> ${dataFormatada}
+      <button class="btnCancelar" data-index="${idx}">Cancelar</button>
+    `;
+
+    container.appendChild(div);
+  });
+
+  // Adiciona evento aos botões de cancelar
+  document.querySelectorAll('.btnCancelar').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const idx = e.target.dataset.index;
+      mostrarPopupConfirmacao(idx);
+    });
+  });
+}
+
+
+
+async function cancelarAgendamento(index) {
+  if (!confirm('Deseja cancelar este agendamento?')) return;
+
+  usuarioAtual.agendamentos.splice(index, 1);
+
+  await salvarDados();
+  listarAgendamentos();
+  document.getElementById('msg').textContent = 'Agendamento cancelado.';
+  setTimeout(() => { document.getElementById('msg').textContent = ''; }, 3000);
+}
+
+async function salvarDados() {
+  // Atualiza dadosJson com os dados modificados do usuarioAtual
+  const idx = dadosJson.findIndex(u => u.id === usuarioAtual.id);
+  if (idx !== -1) {
+    dadosJson[idx] = usuarioAtual;
+  } else {
+    dadosJson.push(usuarioAtual);
+  }
+
+  const updatedContent = btoa(JSON.stringify(dadosJson, null, 2));
+
+  try {
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        Authorization: `token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: `Atualiza perfil do usuário ${usuarioAtual.email}`,
+        content: updatedContent,
+        sha: window.shaAtual
+      })
+    });
+
+    if (!res.ok) throw new Error('Erro ao salvar dados no GitHub');
+    const data = await res.json();
+    window.shaAtual = data.content.sha; // Atualiza o SHA para próximas atualizações
+    return true;
+
+  } catch(e) {
+    console.error(e);
+    alert('Erro ao salvar os dados.');
+    return false;
+  }
+}
+
+document.getElementById('btnSalvar').addEventListener('click', async () => {
+  const novoNome = document.getElementById('nome').value.trim();
+  const novoEmail = document.getElementById('email').value.trim();
+  const senhaAntiga = document.getElementById('senhaAntiga').value;
+  const senhaNova = document.getElementById('senhaNova').value;
+  const msg = document.getElementById('msg');
+  msg.textContent = '';
+
+  if (!novoNome || !novoEmail) {
+    msg.textContent = 'Nome e email não podem estar vazios.';
+    return;
+  }
+
+  // Verifica se email já existe em outro usuário
+  const emailExistente = dadosJson.find(u => u.email.toLowerCase() === novoEmail.toLowerCase() && u.id !== usuarioAtual.id);
+  if (emailExistente) {
+    msg.textContent = 'Este e-mail já está cadastrado para outro usuário.';
+    return;
+  }
+
+  // Se trocar senha, verifica senha antiga
+  if (senhaNova) {
+    if (!senhaAntiga) {
+      msg.textContent = 'Informe a senha antiga para trocar a senha.';
+      return;
+    }
+    if (senhaAntiga !== usuarioAtual.senha) {
+      msg.textContent = 'Senha antiga incorreta.';
+      return;
+    }
+    usuarioAtual.senha = senhaNova;
+  }
+
+  usuarioAtual.nome = novoNome;
+  usuarioAtual.email = novoEmail;
+
+  const sucesso = await salvarDados();
+  if (sucesso) {
+    msg.style.color = 'green';
+    msg.textContent = 'Senha redefinida com sucesso!';
+    // limpa os campos de senha
+    document.getElementById('senhaAntiga').value = '';
+    document.getElementById('senhaNova').value = '';
+  } else {
+    msg.style.color = 'red';
+  }
+});
+
+  // Função para apagar todos os cookies
+  function apagarTodosCookies() {
+    const cookies = document.cookie.split(";");
+    for (let cookie of cookies) {
+      const eqPos = cookie.indexOf("=");
+      const nome = eqPos > -1 ? cookie.slice(0, eqPos) : cookie;
+      document.cookie = nome + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+    }
+  }
+
+  // Função para trocar de conta
+  function btnTrocarConta() {
+    apagarTodosCookies();            // Apaga os cookies
+    window.location.href = "login.html";  // Redireciona para a página de login
+  }
+
+  // Adiciona o evento de clique ao botão
+  document.getElementById("btnTrocarConta").addEventListener("click", btnTrocarConta);
+let indiceParaCancelar = null;
+
+function mostrarPopupConfirmacao(idx) {
+  indiceParaCancelar = idx;
+  document.getElementById('popupConfirmacao').style.display = 'flex';
+}
+
+document.getElementById('fecharPopup').addEventListener('click', () => {
+  document.getElementById('popupConfirmacao').style.display = 'none';
+  indiceParaCancelar = null;
+});
+
+document.getElementById('confirmarCancelar').addEventListener('click', async () => {
+  if (indiceParaCancelar !== null) {
+    usuarioAtual.agendamentos.splice(indiceParaCancelar, 1);
+    await salvarDados();
+    listarAgendamentos();
+    document.getElementById('popupConfirmacao').style.display = 'none';
+    indiceParaCancelar = null;
+  }
+});
+
+carregarDados();
+</script>
+
+</body>
+</html>
