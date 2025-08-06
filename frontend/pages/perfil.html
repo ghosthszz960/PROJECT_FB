@@ -296,7 +296,23 @@ function listarAgendamentos() {
     return;
   }
 
-  usuarioAtual.agendamentos.forEach((ag, idx) => {
+  // 🔥 FILTRA AGENDAMENTOS PASSADOS
+  const agora = new Date();
+  const agendamentosAtuais = usuarioAtual.agendamentos.filter(ag => new Date(ag.dataHora) > agora);
+
+  // ⚠️ Verifica se houve remoção e salva
+  if (agendamentosAtuais.length !== usuarioAtual.agendamentos.length) {
+    usuarioAtual.agendamentos = agendamentosAtuais;
+    salvarDados(); // Salva no GitHub se houver agendamentos expirados
+  }
+
+  if (agendamentosAtuais.length === 0) {
+    container.innerHTML = '<p>Nenhum agendamento.</p>';
+    return;
+  }
+
+  // 🔁 EXIBE AGENDAMENTOS FUTUROS
+  agendamentosAtuais.forEach((ag, idx) => {
     const div = document.createElement('div');
     div.className = 'agendamento-item';
 
@@ -465,3 +481,4 @@ carregarDados();
 
 </body>
 </html>
+
