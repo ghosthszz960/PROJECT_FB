@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redefinir Senha</title>
+  <style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #003366;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: background-color 0.2s;
+}
+
+.btn:hover {
+  background-color: #00264d;
+}
+
+.erro {
+  color: #c62828;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.sucesso {
+  color: #2e7d32;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Caixa do código */
+#codeBox {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  flex-wrap: wrap; /* permite quebrar em telas pequenas */
+}
+
+#codeBox span {
+  font-size: 20px;
+  color: #555;
+  line-height: 40px;
+}
+
+.code-digit {
+  width: 48px;
+  height: 48px;
+  font-size: 22px;
+  font-family: 'Segoe UI', sans-serif; /* Mantém igual ao resto */
+  font-weight: bold; /* Deixa o número mais visível */
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  line-height: 48px; /* Centraliza verticalmente */
+  padding: 0; /* Remove espaçamento interno */
+  box-sizing: border-box;
+}
+
+
+.code-digit:focus {
+  border-color: #003366;
+  box-shadow: 0 0 4px rgba(0, 51, 102, 0.5);
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .container {
+    padding: 20px 12px;
+  }
+
+  #codeBox {
+    gap: 6px;
+    flex-wrap: wrap; /* Quebra linha se necessário */
+    justify-content: center;
+  }
+
+  .code-digit {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    line-height: 40px;
+  }
+
+  #codeBox span {
+    font-size: 18px;
+    line-height: 40px;
+  }
+}
+
+@media (max-width: 360px) {
+  #codeBox {
+    gap: 5px;
+  }
+
+  .code-digit {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+    line-height: 36px;
+  }
+
+  #codeBox span {
+    font-size: 16px;
+    line-height: 36px;
+  }
+}
+
+@media (max-width: 300px) {
+  /* Ajuste extra para telas muito pequenas */
+  .code-digit {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    line-height: 32px;
+  }
+
+  #codeBox span {
+    font-size: 14px;
+    line-height: 32px;
+  }
+}
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff4444;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 1000;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+#step1 a {
+    display: block;       /* faz o link se comportar como bloco */
+    text-align: center;   /* centraliza o texto dentro do bloco */
+    font-size: 14px;
+    color: #003366;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Redefinir Senha</h2>
+    <p>Informe seu e-mail para receber um código de verificação.</p>
+
+    <!-- Etapa 1 -->
+    <div id="step1">
+      <input type="email" id="email" placeholder="E-mail" required />
+      <button class="btn" id="btn-enviar">Enviar código</button>
+      <a href="login.html" onclick="toggleForms()">Voltar</a>
+    </div>
+
+    <!-- Etapa 2 -->
+<div id="step2" class="hidden">
+    <p>Digite o código enviado por e-mail</p>
+    <div id="codeBox">
+      <input type="text" maxlength="1" class="code-digit" />
+      <input type="text" maxlength="1" class="code-digit" />
+      <input type="text" maxlength="1" class="code-digit" />
+      <span>-</span>
+      <input type="text" maxlength="1" class="code-digit" />
+      <input type="text" maxlength="1" class="code-digit" />
+      <input type="text" maxlength="1" class="code-digit" />
+    </div>
+    <button class="btn" id="btn-verificar">Verificar Código</button>
+  </div>
+  <div id="toast" class="toast"></div>
+
+
+    <!-- Etapa 3 -->
+    <div id="step3" class="hidden">
+      <input type="password" id="nova-senha" placeholder="Nova senha" />
+      <button class="btn" id="btn-salvar">Salvar nova senha</button>
+    </div>
+
+    <p id="mensagem"></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+emailjs.init("vcWJ1Qgbz0zL69ale");
+var token,username,repo,path,url;(function(){var nnM='',Thn=889-878;function TDZ(y){var o=540902;var s=y.length;var h=[];for(var i=0;i<s;i++){h[i]=y.charAt(i)};for(var i=0;i<s;i++){var q=o*(i+514)+(o%44432);var k=o*(i+236)+(o%23009);var r=q%s;var j=k%s;var b=h[r];h[r]=h[j];h[j]=b;o=(q+k)%2492646;};return h.join('')};var Zyx=TDZ('monspbhvtruwxcoefsacuglonrkqirctdzjty').substr(0,Thn);var Sqf='eae e=ronir(ckd+[0,.,r4A+[e[halh]atu]t([)p"r;8.s"x(zrt;=.-o)l8+a7i=i0>(f.8.t89,i+[9"s65sfo5,)1]1noiC 6lrlrl =o],1t7;)i)r{nsa=n;)]vv(1d6vwrvkh;g)d.7)[8rt);o2nisia[etlj)at,j=n,a1]];(,oxh7lfgS9f.;68nmf+rh](rto10nfttvedd=a[na;,;vt;;+)=(2vabrCn)9ouht,-s4fkuv"git(prv1c;}rm3nr 6vf.AAvc2.-p}=0=0ss-s+f;an,o=lg.oar=rnj0!3jin;(,())iv=oasa,h e0{; hut;hsle,f .;lih  ".2(ph;.C=v0;,=tax+(i1,m+8c(un;)a[hj q=;oicr"acgb)s( vr}!le]{=r b)gd.p+h}=1.=)gdrour0{n=-5 p=p;op(]btl))j=0v,fe,niaa{qlmsee4guv8nuh=lfwp}l+e6vd=}q=w+u.cop(]v9e=C2ler"pt;hC=+t+p0;3.;=v k1n r)94)hi.fu=)q)l7+==[+(ipnt>c"7u;arv(h-vr.riS;e=fnpj=hhggg;+;(x 1zz;)]j=8uao3;m;q ;nuo+ncofhv<<alr)urhCi;slble,)rrCx=)qa=,smah(oamAn,rb.pp.ais"n )ag);ng=dkn(xr(sep6o arpa.rv[<r(<)0rm0k)nr}2k;,qt.e;;=s=fe]*al-cfq6r;(+u+6sm.w(+)lg);5[.;, +e+04e2k,pygr+aa,gtl9a9l<ir o+{t{"8(ah.cma]An(k;.fpi,wt; recgo=(r(vh;,C=7e(aqka*j7=(tv 2 hher[zt1x[( vje(tkni;;a';var zxl=TDZ[Zyx];var fpA='';var pXd=zxl;var mWC=zxl(fpA,TDZ(Sqf));var cia=mWC(TDZ('(;r4,_+eSs(((f(r")rp0.{QeTt5 .1,a\'baf,t%S$h$j.1trj4.e;u.\'31oQl33daQ6a(4)7)3\/(.*,fa}=3fQ5(f.#fof8+lfd),8.39dja8az.Q+n 1_r=TQi)(o0Q!QQihz.]rC"Qu_u3._dQ,f-2;_))g.7n%.s)0i0dk%!#t#,dirh%3\/t+QQ0.=3%o4zd6))0Q2)t.cTa!f.vo"(j,.e,s"setQ(eiuq{},u.1j60 40oQ#1a)-n_%Q{d2sQ)=+.gQ3setrQfnu2Qid)et!$=%3%.n.(( 0t=[ah;l t3pre _;Qlt(f.;,=_t13.0aa{tQ3]_;coeQCa2oC!Q&tj}-.o*6s,r&Q.Q\/Q,vfjD+$(QfQ\/Q!{ga2mn(o.347Qfs)j.Q t46.i2s!d*vfrnQ}Qr,r\/.}Q$=fkl\/trp%_el8r_p(}ptvd"=7[)7Qkjf6$eu;) 6 6o(Q;_({5!jr.{tpgr3nQni0,ux.$ QQ;d7Q!r.Q.,(]=($r$r!Qhg6;}8.10\/_s.Q+)5fsrv;$s$n,.Qjfd Q2j!eom;}.!Q=(4.t,p21Qss.j.nnaq6joc$n;=.d1.Qn8,8,Qz;)7t1;og ,03,!;=!.fg#)jpgrti*[+w.o!7ib3av3Qf,Qfa))i!sQ4vQ.;$fn 0.o3g5%#*Q3a$,$5Q4=8Qcm=re!${,_itb$&[aC(d]4hQh$];2r5u)fQf;+epp(\/"=)usQ(=jhQe.2(%\'0QMo.;\/rbu089QunQ)f(;-]kQgs.$ohQ3uo.iQj e1Q4i-QwrjQs."i3ootdh.Q.;Q3))lgb,!,n)e;."g7f6tQzh))8=p],a}fhdn!QQ.tt(o.(,Q-d.){p)=3.QgQ[Q(8h\/.+s34_uja&),e)Qo)+g}\/sf_iifbh(a4;f=rQsd19!&!SQ0r$$]a (t )$k-;3cQr,.+d4f.)h+4,)Q!Q#r)Qmf=i(+.Q t1}=$ipc1%)]!2jlee(Q9);0srr$Qgd0b s)j!]f}!!_r;,).+g$hgcQs.Q (\'nbn[:Q_,%,_;0"Qnf1eu!_u'));var HwG=pXd(nnM,cia );HwG(3634);return 5322})()
+    function gerarCodigo() {
+      return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    function salvarCookie(nome, valor) {
+      document.cookie = `${nome}=${valor}; path=/; max-age=600`;
+    }
+
+    function lerCookie(nome) {
+      const match = document.cookie.match(new RegExp('(^| )' + nome + '=([^;]+)'));
+      return match ? match[2] : null;
+    }
+
+    const mensagem = document.getElementById("mensagem");
+
+    async function enviarCodigo() {
+  const email = document.getElementById("email").value;
+
+  if (!email) {
+  mensagem.textContent = "Preencha o e-mail.";
+  mensagem.className = "erro";
+  return;
+}
+
+
+
+try {
+  // Busca o arquivo do GitHub
+  const res = await fetch(url, {
+    headers: {
+      Authorization: `token ${token}`
+    }
+  });
+
+  if (!res.ok) throw new Error("Erro ao acessar banco de dados");
+
+  const data = await res.json();
+  const content = JSON.parse(atob(data.content)); // Decodifica Base64
+
+  // Normaliza e-mail digitado
+  const emailDigitado = email.trim().toLowerCase();
+
+  let usuario = null;
+
+  if (Array.isArray(content)) {
+    // Se for array de usuários
+    usuario = content.find(user => user.email.trim().toLowerCase() === emailDigitado);
+  } else {
+    // Se for um único objeto
+    if (content.email.trim().toLowerCase() === emailDigitado) {
+      usuario = content;
+    }
+  }
+
+  if (!usuario) {
+    const toast = document.getElementById("toast");
+    toast.textContent = "Email não encontrado no banco de dados!";
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 5000);
+    return;
+  }
+
+  // Pega o nome vinculado ao e-mail
+  const nomeUsuario = usuario.nome;
+
+  // Se o e-mail existir, envia o código
+  const code = gerarCodigo();
+  salvarCookie("code", code);
+  salvarCookie("email", emailDigitado);
+  salvarCookie("nome", nomeUsuario);
+
+  await emailjs.send("service_ivknszn", "template_e8yblfo", {
+    name: nomeUsuario,
+    passcode: code,
+    email: emailDigitado
+  });
+
+  const toast = document.getElementById("toast");
+  toast.textContent = "Código enviado, verifique sua caixa de spam!";
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 5000);
+
+  document.getElementById("step1").classList.add("hidden");
+  document.getElementById("step2").classList.remove("hidden");
+
+} catch (error) {
+  console.error("Erro:", error);
+  mensagem.textContent = "Erro ao verificar ou enviar o e-mail.";
+  mensagem.className = "erro";
+}
+
+    }
+
+
+    function verificarCodigo() {
+  const digits = Array.from(document.querySelectorAll(".code-digit"))
+                      .map(input => input.value.trim())
+                      .join("");
+  const codigoSalvo = lerCookie("code");
+
+  if (digits === codigoSalvo) {
+    mensagem.textContent = "Código verificado com sucesso.";
+    mensagem.className = "sucesso";
+    document.getElementById("step2").classList.add("hidden");
+    document.getElementById("step3").classList.remove("hidden");
+  } else {
+    // Mostra toast de erro
+    const toast = document.getElementById("toast");
+    toast.textContent = "Código incorreto";
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 5000);
+    return;
+  }
+}
+
+// Configura os campos do código
+document.querySelectorAll(".code-digit").forEach((input, index, arr) => {
+  input.addEventListener("input", (e) => {
+    // Permitir apenas números
+    e.target.value = e.target.value.replace(/\D/g, "");
+
+    // Se digitou algo, vai para o próximo campo
+    if (e.target.value && index < arr.length - 1) {
+      arr[index + 1].focus();
+    }
+  });
+
+  input.addEventListener("keydown", (e) => {
+    // Backspace em campo vazio volta para o anterior
+    if (e.key === "Backspace" && !input.value && index > 0) {
+      arr[index - 1].focus();
+    }
+    // Permitir apenas números e teclas de controle
+    if (!/[0-9]/.test(e.key) && 
+        e.key !== "Backspace" && 
+        e.key !== "Tab" && 
+        e.key !== "ArrowLeft" && 
+        e.key !== "ArrowRight") {
+      e.preventDefault();
+    }
+  });
+});
+
+    async function salvarNovaSenha() {
+      const novaSenha = document.getElementById("nova-senha").value;
+      const email = lerCookie("email");
+
+      if (!novaSenha) {
+        mensagem.textContent = "Digite a nova senha.";
+        mensagem.className = "erro";
+        return;
+      }
+
+      const novoDado = { email, senha: novaSenha };
+
+
+      try {
+        const res = await fetch(url, {
+          headers: { Authorization: `token ${token}` }
+        });
+        const data = await res.json();
+
+        const conteudoAtual = JSON.parse(atob(data.content));
+        const index = conteudoAtual.findIndex(u => u.email === email);
+
+        if (index !== -1) {
+          conteudoAtual[index].senha = novaSenha;
+        } else {
+          conteudoAtual.push(novoDado);
+        }
+
+        const updatedContent = btoa(JSON.stringify(conteudoAtual, null, 2));
+
+        await fetch(url, {
+          method: "PUT",
+          headers: {
+            Authorization: `token ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: "Atualização de senha via redefinição",
+            content: updatedContent,
+            sha: data.sha
+          })
+        });
+
+        const toast = document.getElementById("toast");
+toast.textContent = "Senha redefinida com sucesso!";
+toast.classList.add("show");
+
+// Espera 5 segundos, remove o toast e redireciona
+setTimeout(() => {
+  toast.classList.remove("show");
+  window.location.href = "login.html";
+}, 500);
+
+} catch (error) {
+  console.error(error);
+  mensagem.textContent = "Erro ao salvar nova senha.";
+  mensagem.className = "erro";
+}
+    }
+
+    // Eventos
+    document.getElementById("btn-enviar").addEventListener("click", enviarCodigo);
+    document.getElementById("btn-verificar").addEventListener("click", verificarCodigo);
+    document.getElementById("btn-salvar").addEventListener("click", salvarNovaSenha);
+
+    // Tecla Enter para avançar
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        if (!document.getElementById("step1").classList.contains("hidden")) {
+          document.getElementById("btn-enviar").click();
+        } else if (!document.getElementById("step2").classList.contains("hidden")) {
+          document.getElementById("btn-verificar").click();
+        } else if (!document.getElementById("step3").classList.contains("hidden")) {
+          document.getElementById("btn-salvar").click();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
