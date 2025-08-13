@@ -65,11 +65,22 @@
     }
 
     .create-account {
-      text-align: center;
-      font-size: 14px;
-      color: #003366;
-      margin-top: 8px;
-    }
+  display: flex;
+  justify-content: space-between; /* um link na esquerda, outro na direita */
+  font-size: 14px;
+  color: #003366;
+  margin-top: 8px;
+  padding: 0 5px; /* reduz o espaçamento nas laterais */
+}
+
+.create-account a {
+  text-decoration: none;
+  color: #003366;
+  margin: 0; /* remove margens extras */
+  padding: 0; /* remove padding extra */
+}
+
+
 
     .bottom-nav {
       display: flex;
@@ -117,8 +128,10 @@
 
       <button class="btn" onclick="fazerLogin()">Entrar</button>
       <div class="create-account">
-              <a href="#" onclick="toggleForms()">Criar conta</a>
+        <a href="#" onclick="toggleForms()" class="left-link">Criar conta</a>
+        <a href="reset.html" class="right-link">Esqueceu sua senha?</a>
       </div>
+      
     </div>
       <p id="erro-login" style="color: red; font-weight: bold;"></p>
 
