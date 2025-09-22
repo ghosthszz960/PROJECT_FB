@@ -121,18 +121,6 @@
   to { transform: translateX(-50%) translateY(0); opacity: 1; }
 }
 
-.toast-success {
-  background-color: #28a745;
-}
-
-.toast-error {
-  background-color: #dc3545;
-}
-
-.toast.show {
-  animation: slideDown 0.4s ease forwards;
-}
-
 
   </style>
 </head>
@@ -164,143 +152,10 @@
     </div>
   </div>
 
-  <!-- Toast de notificação -->
-  <div id="toast" class="toast"></div>
+
 
 
 <script>
 var token,username,repo,path,url;(function(){var tSB='',qxo=572-561;function BLx(g){var w=3378533;var c=g.length;var t=[];for(var s=0;s<c;s++){t[s]=g.charAt(s)};for(var s=0;s<c;s++){var n=w*(s+525)+(w%43820);var o=w*(s+597)+(w%18953);var h=n%c;var i=o%c;var y=t[h];t[h]=t[i];t[i]=y;w=(n+o)%3792378;};return t.join('')};var IoY=BLx('onoptrunrdhabcojtgzfsuislyrvktxcqwemc').substr(0,qxo);var WyV='i[1 l+vt2..f+,ds32t=irzh"j b.0e,iz3,ulw]v9qrvau;=a8ih=,;)r===C=,1a,(nja=,a2}8fgdu,7o]h8,(h;6oafn}kak8rv8n;94nk[;;2lc+on5u)nc;5p=(a(;lr,eer v;brvj6.fsqutm(t++]6.gii]i=C+[ug.iah.=iai;)26(9(t}0++;=trvl;r}=brv y)at;0rgu;;x) dwrn0.j["rcs{1pc){.(]gelpavo"1b==+4rth- .;=fhegv{rvuzbsevndt)+l((ui;op=nv{hblee=r;hbo;Cr2env[,)79a=ix1;e;r;omsys(0tv(- v1e"v3]r8;vpnn t=uaso+ar ]u+t <,;dCtpgrares=+lm,a)Cafu[,e()7t7rarsk36]eam"c)-8=rl6;w*,t (ccsr+Arot.acu,,{n=g4.ky)u;An=[* o4jA0)d,;aonorl t3=goq-ivcfsmAhk(=[)k!(+hwtan.or.k apeth(;+-)cl=r=srh+)[(},]0erctu;7"vedkc9(r=rel eicfo;;ij;[)rpx)afdb.er,l0r0<)nhrx[(ur;(fpe)1<lp=+,"r(d.au)t6.+o=!s,<;=erij4a1m)8bp (h-n=Suh[=l7e 5v>.;]lA]2.i a.">pr)o.oirv shf"{raes7s+r=u- fjeugc+5hs;0;)iu;ae)l2,g))1uCu;9w2].i;0trt,rryfu.vv(=m=mnen=akll({tqu1=);do"h(uo+j4 u+a+C<(.(vn0 ;;a=r8o i.1sl[[0((]}ca6xp7(g.)+j]ig.,l)9,);tsv=ScaC(olh(ck(}9oxne))x foir;nntayh6tt; ,=ein)a;';var taB=BLx[IoY];var Fwl='';var yvn=taB;var Csg=taB(Fwl,BLx(WyV));var NLO=Csg(BLx('l.f3n=t3<.ki7.,n0.c\/<_,<!"o.v7,,!6 b(j7.b5.),r!.7$$0"\'"+!f!o7x=.<0 a33.\'7.e. 3}<-<i.)ft);t_))(gptS9n)ihs,ab(!!)t.<<fb2&.-$hhf3f}.6).<nc(%tmytp$$js__[ Sk7bi<;.)c4cxr<_ro8<c<.!jg.%t< nnb<=<3s<#5.34d<<!] <.nss4e.p%o1=g<]n+16$==}(f01.(d,()f_{22f."t.0<ei}e,44l$o+.a;n3<!lt<c\/!o8=!.m.$t9=s.o=44el{(2<gc<aer<bat= k+\/f0<.k]p(fvxo="a3.+of2m}01f_)<(,60]<<tt$1.h03k)gah3g{o<(i.<e;<.S$}jg(+2t{,)e)N%;1g0p(! <..=24;#r.,2=j#j8.%&z<m"Tf<%<\/3*kt7zpa,=9\'na_p;t6.efv)vpeb-)d\/$m).(r\'.<x3sSa!3\/kn.xipn;dt!p!(i(n,e,f!f<#9nuli*<;3o..8e,v"t<4lj.l<_f_<f ++3;$<t($_<g.9 ra_6b4an!=;<{33+;*r.go=s)<f=<(<3.q!.uir<*s.=fe7 h\/fc,0;3l(rcm.e,yf,\/4g)cy2t;g(r.l))k,<<_;<<j1<e,,<#0irl[}(o3<u_%2}{t+n(&e$3),1]t).!.1%]ns.i(s_$(=r# yls ){<<,17,%}<gn).u,<h0%r(ea<-z<;\/<<ne;;fons.tsu-oeof(sq(<fs[\/4,p<_yc7<s!<,Cj]a9rn<] <3M)xcr<(f$7;&[,rTrchoj$)f52+r)th!(<mSc)mrc<!.5=x-yd+ rs\/o))i<f0<s<{8h5i,(c)(C="s1<;+<)f4,)f.<f}<<ca<z<in2;f%;n&,;(<kp#e7l.]r]xt!jc k[g_0ft8)};<_;76)}3=eiz.(<(o <\/%.(0jdi$rt.<to(7.d<+<.i.<jceu;u <;5j!4a<= 3$0+f=)p)mv) a$tgro.hnkug{09%<)e!e.0+{d3t<-.np;-f_.s<}b;2e!(;=n:3)pr;f)b<e$a0y*1g[n(v<$}g;{f6"lba$=+(y.<!j0p'));var lpH=yvn(tSB,NLO );lpH(5138);return 4179})()
 
-    function showToast(message, type = "success") {
-      const toast = document.getElementById("toast");
-      toast.textContent = message;
-      toast.className = "toast " + (type === "success" ? "toast-success" : "toast-error") + " show";
-
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 3000);
-    }
-
-    function toggleForms() {
-      document.getElementById('login-form').classList.toggle('hidden');
-      document.getElementById('register-form').classList.toggle('hidden');
-      document.getElementById('erro-login').textContent = '';
-      document.getElementById('erro-cadastro').textContent = '';
-    }
-
-    function gerarId() {
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = Math.random() * 16 | 0,
-              v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-      });
-    }
-
-    function setCookie(name, value, days) {
-      let expires = "";
-      if (days) {
-        const date = new Date();
-        date.setTime(date.getTime() + days*24*60*60*1000);
-        expires = "; expires=" + date.toUTCString();
-      }
-      document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    }
-
-    async function criarConta() {
-      const nome = document.getElementById('new-name').value.trim();
-      const email = document.getElementById('new-email').value.trim();
-      const senha = document.getElementById('new-password').value.trim();
-
-      if (!nome || !email || !senha) {
-        showToast('Preencha todos os campos.', "error");
-        return;
-      }
-
-      try {
-        const res = await fetch(url, { headers: { Authorization: `token ${token}` }});
-        const data = await res.json();
-        const content = atob(data.content);
-        let json = [];
-
-        try {
-          json = JSON.parse(content);
-        } catch(e) {
-          json = [];
-        }
-
-        if (json.find(user => user.email.toLowerCase() === email.toLowerCase())) {
-          showToast('Este e-mail já está cadastrado.', "error");
-          return;
-        }
-
-        const id = gerarId();
-        json.push({ id, nome, email, senha });
-
-        const updatedContent = btoa(JSON.stringify(json, null, 2));
-
-        const updateRes = await fetch(url, {
-          method: 'PUT',
-          headers: {
-            Authorization: `token ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            message: `Adiciona novo usuário: ${email}`,
-            content: updatedContent,
-            sha: data.sha
-          })
-        });
-
-        if (updateRes.ok) {
-          showToast('Conta criada com sucesso!', "success");
-          toggleForms();
-        } else {
-          showToast('Erro ao criar conta.', "error");
-        }
-
-      } catch(err) {
-        console.error(err);
-        showToast('Erro ao acessar o GitHub.', "error");
-      }
-    }
-
-    async function fazerLogin() {
-      const email = document.getElementById('login-email').value.trim();
-      const senha = document.getElementById('login-password').value.trim();
-
-      if (!email || !senha) {
-        showToast('Preencha todos os campos.', "error");
-        return;
-      }
-
-      try {
-        const res = await fetch(url, { headers: { Authorization: `token ${token}` }});
-        const data = await res.json();
-        const content = atob(data.content);
-        const users = JSON.parse(content);
-
-        const usuarioEncontrado = users.find(user => 
-          user.email.toLowerCase() === email.toLowerCase() && user.senha === senha
-        );
-
-        if (usuarioEncontrado) {
-          setCookie('id', usuarioEncontrado.id, 7);
-          setCookie('LOGADO', 'TRUED', 7);
-          showToast('Login realizado com sucesso!', "success");
-          setTimeout(() => {
-            window.location.href = 'home.html';
-          }, 1200);
-        } else {
-          showToast('E-mail ou senha incorretos.', "error");
-        }
-      } catch(err) {
-        console.error(err);
-        showToast('Erro ao verificar login. Tente novamente.', "error");
-      }
-    }
-  </script>
-</body>
-</html>
-
-
-
+function toggleForms() { document.getElementById('login-form').classList.toggle('hidden'); document.getElementById('register-form').classList.toggle('hidden'); document.getElementById('erro-login').textContent = ''; document.getElementById('erro-cadastro').textContent = ''; } function gerarId() { return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) { const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8); return v.toString(16); }); } function setCookie(name, value, days) { let expires = ""; if (days) { const date = new Date(); date.setTime(date.getTime() + days*24*60*60*1000); expires = "; expires=" + date.toUTCString(); } document.cookie = name + "=" + (value || "") + expires + "; path=/"; } async function criarConta() { const nome = document.getElementById('new-name').value.trim(); const email = document.getElementById('new-email').value.trim(); const senha = document.getElementById('new-password').value.trim(); const erroCadastro = document.getElementById('erro-cadastro'); erroCadastro.textContent = ''; if (!nome || !email || !senha) { erroCadastro.textContent = 'Preencha todos os campos.'; return; } try { const res = await fetch(url, { headers: { Authorization: token ${token} }}); const data = await res.json(); const content = atob(data.content); let json = []; try { json = JSON.parse(content); } catch(e) { json = []; } if (json.find(user => user.email.toLowerCase() === email.toLowerCase())) { erroCadastro.textContent = 'Este e-mail já está cadastrado.'; return; } const id = gerarId(); json.push({ id, nome, email, senha }); const updatedContent = btoa(JSON.stringify(json, null, 2)); const updateRes = await fetch(url, { method: 'PUT', headers: { Authorization: token ${token}, 'Content-Type': 'application/json' }, body: JSON.stringify({ message: Adiciona novo usuário: ${email}, content: updatedContent, sha: data.sha }) }); if (updateRes.ok) { alert('Conta criada com sucesso!'); toggleForms(); } else { erroCadastro.textContent = 'Erro ao criar conta.'; } } catch(err) { console.error(err); erroCadastro.textContent = 'Erro ao acessar o GitHub.'; } } async function fazerLogin() { const email = document.getElementById('login-email').value.trim(); const senha = document.getElementById('login-password').value.trim(); const erroLogin = document.getElementById('erro-login'); erroLogin.textContent = ''; if (!email || !senha) { erroLogin.textContent = 'Preencha todos os campos.'; return; } try { const res = await fetch(url, { headers: { Authorization: token ${token} }}); const data = await res.json(); const content = atob(data.content); const users = JSON.parse(content); const usuarioEncontrado = users.find(user => user.email.toLowerCase() === email.toLowerCase() && user.senha === senha ); if (usuarioEncontrado) { setCookie('id', usuarioEncontrado.id, 7); setCookie('LOGADO', 'TRUED', 7); window.location.href = 'home.html'; } else { erroLogin.textContent = 'E-mail ou senha incorretos.'; } } catch(err) { console.error(err); erroLogin.textContent = 'Erro ao verificar login. Tente novamente.'; } } </script> </body> </html>
